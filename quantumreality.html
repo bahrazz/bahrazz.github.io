@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUANTUM PSYCHEDELIC REALITY SIMULATOR</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap');
         
         * {
             margin: 0;
@@ -14,65 +14,120 @@
         }
         
         body {
-            background: #000;
-            color: #0f0;
-            font-family: 'Comic Neue', cursive;
+            background: #000000;
+            color: #00ff00;
+            font-family: 'Orbitron', monospace;
             overflow-x: hidden;
-            position: relative;
             min-height: 100vh;
-            cursor: crosshair;
+            cursor: none;
         }
 
-        body:hover {
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23ff00ff' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%2300ffff'/%3E%3C/svg%3E"), auto;
+        .custom-cursor {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            background: conic-gradient(from 0deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference;
+            transform: translate(-50%, -50%);
+            animation: cursorPulse 2s infinite;
         }
 
-        body:active {
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23ffff00' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='8' fill='%23ff0000'/%3E%3C/svg%3E"), auto;
+        @keyframes cursorPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.7; }
         }
-        
-        .matrix-bg {
+
+        .matrix-rain {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -999;
-            opacity: 0.4;
+            z-index: -1000;
+            opacity: 0.3;
         }
-        
+
         .reality-distortion {
             position: fixed;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, transparent 50%, rgba(255,0,255,0.1) 100%);
-            animation: realityWarp 15s infinite linear;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 0, 0.1) 0%, transparent 50%);
+            animation: distortion 8s ease-in-out infinite;
             pointer-events: none;
+            z-index: -999;
+        }
+
+        @keyframes distortion {
+            0%, 100% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
+            25% { transform: scale(1.1) rotate(90deg); filter: hue-rotate(90deg); }
+            50% { transform: scale(0.9) rotate(180deg); filter: hue-rotate(180deg); }
+            75% { transform: scale(1.05) rotate(270deg); filter: hue-rotate(270deg); }
+        }
+
+        .quantum-portal {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            background: conic-gradient(from 0deg, #ff0000, #ff00ff, #0000ff, #00ffff, #00ff00, #ffff00, #ff0000);
+            border-radius: 50%;
+            animation: portalSpin 4s linear infinite;
+            filter: blur(20px);
+            opacity: 0.7;
             z-index: -998;
         }
-        
-        @keyframes realityWarp {
-            0% { transform: scale(1) rotate(0deg); }
-            33% { transform: scale(1.2) rotate(120deg); }
-            66% { transform: scale(0.8) rotate(240deg); }
-            100% { transform: scale(1) rotate(360deg); }
+
+        @keyframes portalSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
         }
-        
-        .quantum-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #fff;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: -997;
+
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(45deg, #000000, #001100, #000011, #110000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            font-family: 'Press Start 2P', monospace;
         }
-        
+
+        .terminal-content {
+            text-align: center;
+            padding: 2rem;
+            border: 3px solid #00ff00;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 50px #00ff00;
+            animation: terminalGlitch 5s infinite;
+        }
+
+        @keyframes terminalGlitch {
+            0%, 100% { transform: translateX(0); }
+            5% { transform: translateX(-5px); }
+            10% { transform: translateX(5px); }
+            15% { transform: translateX(-5px); }
+            20% { transform: translateX(0); }
+        }
+
         .glitch-text {
             position: relative;
             display: inline-block;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5rem;
+            margin-bottom: 2rem;
         }
-        
+
         .glitch-text::before,
         .glitch-text::after {
             content: attr(data-text);
@@ -82,1083 +137,656 @@
             width: 100%;
             height: 100%;
         }
-        
+
         .glitch-text::before {
-            animation: glitch-1 0.8s infinite linear alternate-reverse;
+            animation: glitch-1 0.5s infinite linear alternate-reverse;
             color: #ff00ff;
             z-index: -1;
         }
-        
+
         .glitch-text::after {
-            animation: glitch-2 0.8s infinite linear alternate-reverse;
+            animation: glitch-2 0.5s infinite linear alternate-reverse;
             color: #00ffff;
             z-index: -2;
         }
-        
+
         @keyframes glitch-1 {
-            0% { transform: translate(0); opacity: 0.8; }
-            20% { transform: translate(-3px, 3px); opacity: 0.6; }
-            40% { transform: translate(-3px, -3px); opacity: 0.4; }
-            60% { transform: translate(3px, 3px); opacity: 0.6; }
-            80% { transform: translate(3px, -3px); opacity: 0.8; }
-            100% { transform: translate(0); opacity: 1; }
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
         }
-        
+
         @keyframes glitch-2 {
-            0% { transform: translate(0); opacity: 0.8; }
-            20% { transform: translate(3px, -3px); opacity: 0.6; }
-            40% { transform: translate(3px, 3px); opacity: 0.4; }
-            60% { transform: translate(-3px, -3px); opacity: 0.6; }
-            80% { transform: translate(-3px, 3px); opacity: 0.8; }
-            100% { transform: translate(0); opacity: 1; }
+            0% { transform: translate(0); }
+            20% { transform: translate(3px, -3px); }
+            40% { transform: translate(3px, 3px); }
+            60% { transform: translate(-3px, -3px); }
+            80% { transform: translate(-3px, 3px); }
+            100% { transform: translate(0); }
         }
-        
-        .matrix-terminal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', monospace;
-            color: #0f0;
-            animation: accessGranted 5s forwards;
+
+        .terminal-line {
+            color: #00ff00;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            text-shadow: 0 0 10px #00ff00;
         }
-        
-        .terminal-content {
-            max-width: 800px;
-            padding: 20px;
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .reality-interface {
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .quantum-header {
             text-align: center;
-        }
-        
-        .access-granted {
-            animation: accessGranted 5s forwards;
-        }
-        
-        @keyframes accessGranted {
-            0% { opacity: 1; transform: scale(1); }
-            70% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; display: none; transform: scale(1.2); }
-        }
-        
-        .hidden-nav {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 900;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 15px;
-            border-radius: 15px;
-            border: 2px solid #0f0;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 15px;
-            list-style: none;
-            flex-wrap: wrap;
-        }
-        
-        .nav-links a {
-            color: #0f0;
-            text-decoration: none;
-            padding: 10px 15px;
-            border: 1px solid transparent;
-            transition: all 0.4s;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        
-        .nav-links a:hover {
-            border: 1px solid #ff00ff;
-            background: #00ffff;
-            color: #000;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
-        }
-        
-        header {
-            padding: 120px 20px 80px;
-            text-align: center;
-            background: linear-gradient(45deg, #ff0000, #0000ff, #00ff00, #ffff00, #ff00ff);
-            background-size: 500% 500%;
-            animation: gradientShift 8s ease infinite;
+            padding: 4rem 2rem;
+            margin-bottom: 3rem;
             position: relative;
             overflow: hidden;
-            border-bottom: 8px solid #00ffff;
         }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            25% { background-position: 100% 50%; }
-            50% { background-position: 50% 100%; }
-            75% { background-position: 0% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        h1 {
-            font-size: 4.5rem;
-            text-transform: uppercase;
-            letter-spacing: 15px;
-            margin-bottom: 30px;
-            position: relative;
-            font-family: 'Press Start 2P', cursive;
-            text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
-        }
-        
-        .subtitle {
-            font-size: 1.8rem;
-            opacity: 0.9;
-            margin-bottom: 40px;
-            animation: subtitlePulse 3s infinite;
-            font-family: 'Press Start 2P', cursive;
-        }
-        
-        @keyframes subtitlePulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); text-shadow: 0 0 10px #0f0; }
-            50% { opacity: 1; transform: scale(1.05); text-shadow: 0 0 20px #ff00ff, 0 0 30px #0f0; }
-        }
-        
-        main {
-            padding: 80px 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .reality-container {
-            perspective: 1000px;
-            margin-bottom: 80px;
-        }
-        
-        section {
-            margin-bottom: 100px;
-            padding: 60px 40px;
-            border: 5px double #ff00ff;
-            background: rgba(0, 255, 255, 0.08);
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            transition: all 0.5s ease;
-            border-radius: 20px;
-        }
-        
-        section:hover {
-            transform: rotateY(5deg) rotateX(5deg) scale(1.02);
-            box-shadow: 0 0 50px rgba(255, 0, 255, 0.3);
-        }
-        
-        section::before {
-            content: "";
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
-            background: conic-gradient(from 45deg, #ff0000, #0000ff, #00ff00, #ffff00, #ff00ff, #ff0000);
-            z-index: -1;
-            filter: blur(30px);
-            opacity: 0.3;
-            animation: conicRotate 10s linear infinite;
-        }
-        
-        @keyframes conicRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        h2 {
-            font-size: 3rem;
-            margin-bottom: 50px;
-            text-align: center;
-            text-transform: uppercase;
-            font-family: 'Press Start 2P', cursive;
-            position: relative;
-            text-shadow: 0 0 15px #ffff00;
-        }
-        
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 50px;
-            margin-top: 60px;
-        }
-        
-        .card {
-            background: rgba(255, 0, 255, 0.15);
-            padding: 40px 30px;
-            border: 3px solid #00ffff;
-            border-radius: 20px;
-            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            backdrop-filter: blur(10px);
-        }
-        
-        .card:hover {
-            transform: rotate3d(1, 1, 1, 15deg) scale(1.08);
-            background: rgba(0, 255, 255, 0.25);
-            box-shadow: 0 0 50px #ff00ff, 0 0 80px rgba(0, 255, 255, 0.3);
-            border-color: #ffff00;
-        }
-        
-        .card::after {
-            content: "";
+
+        .header-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: translateX(-100%);
+            background: linear-gradient(45deg, #ff0000, #0000ff, #00ff00, #ffff00, #ff00ff);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            filter: blur(50px);
+            opacity: 0.3;
+            z-index: -1;
         }
-        
-        .card:hover::after {
-            animation: shimmer 0.8s;
-        }
-        
-        @keyframes shimmer {
-            100% { transform: translateX(100%); }
-        }
-        
-        .card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            color: #ffff00;
-            text-transform: uppercase;
-            font-family: 'Press Start 2P', cursive;
-            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
-        }
-        
-        .card p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            color: #00ffff;
-        }
-        
-        .psychedelic-button {
-            background: linear-gradient(45deg, #ff0000, #0000ff, #00ff00);
-            background-size: 300% 300%;
-            color: white;
-            border: none;
-            padding: 18px 35px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin: 20px 0;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s;
-            border-radius: 50px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: buttonGradient 4s ease infinite;
-            font-family: 'Press Start 2P', cursive;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        @keyframes buttonGradient {
+
+        @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
-        .psychedelic-button:hover {
-            transform: scale(1.15) rotate(5deg);
-            box-shadow: 0 0 30px #ff00ff, 0 0 60px #00ffff;
-            letter-spacing: 3px;
+
+        .nav-matrix {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1.5rem;
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            z-index: 100;
         }
-        
-        .psychedelic-button:active {
-            transform: scale(0.95) rotate(-5deg);
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
         }
-        
-        .psychedelic-button::before {
-            content: "";
+
+        .nav-button {
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            padding: 1rem 1.5rem;
+            color: #000;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 0 30px #ff00ff;
+        }
+
+        .nav-button::before {
+            content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-            transition: 0.8s;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
         }
-        
-        .psychedelic-button:hover::before {
+
+        .nav-button:hover::before {
             left: 100%;
         }
-        
-        .code-input {
+
+        .reality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .quantum-card {
+            background: rgba(255, 0, 255, 0.1);
+            border: 3px solid #00ffff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .quantum-card:hover {
+            transform: translateY(-10px) rotate3d(1, 1, 1, 5deg);
+            box-shadow: 0 0 50px #ff00ff, 0 0 80px rgba(0, 255, 255, 0.3);
+            border-color: #ffff00;
+        }
+
+        .quantum-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, #ff00ff, #00ffff, #ffff00, transparent);
+            animation: cardRotate 10s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes cardRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .card-title {
+            color: #ffff00;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px #ffff00;
+        }
+
+        .card-description {
+            color: #00ffff;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .reality-input {
+            width: 100%;
             background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #0f0;
-            color: #0f0;
-            padding: 15px 20px;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 1rem 1.5rem;
             font-family: 'Courier New', monospace;
             font-size: 1.1rem;
-            width: 100%;
-            margin: 20px 0;
+            margin-bottom: 1.5rem;
             border-radius: 10px;
-            transition: all 0.3s;
-            outline: none;
+            transition: all 0.3s ease;
         }
-        
-        .code-input:focus {
+
+        .reality-input:focus {
+            outline: none;
             border-color: #ff00ff;
             box-shadow: 0 0 20px #ff00ff;
             background: rgba(0, 0, 0, 0.9);
         }
-        
-        .secret-button {
+
+        .psychedelic-button {
+            background: linear-gradient(45deg, #ff0000, #0000ff, #00ff00);
+            background-size: 300% 300%;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            color: white;
+            font-family: 'Orbitron', monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: buttonShift 4s ease infinite;
+        }
+
+        @keyframes buttonShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .psychedelic-button:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 0 40px #ff00ff, 0 0 80px #00ffff;
+            letter-spacing: 2px;
+        }
+
+        .reality-output {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 10px;
+            min-height: 120px;
+            font-family: 'Courier New', monospace;
+            color: #00ff00;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reality-output::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff00, transparent);
+            animation: scanLine 2s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100px); }
+        }
+
+        .symbol-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .reality-symbol {
             background: transparent;
             border: 2px dashed #ffff00;
             color: #ffff00;
-            padding: 12px 20px;
-            margin: 8px;
+            padding: 1rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s;
-            border-radius: 8px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            border-radius: 10px;
+            transition: all 0.3s ease;
         }
-        
-        .secret-button:hover {
+
+        .reality-symbol:hover {
             background: #ffff00;
             color: #000;
             transform: scale(1.1);
             border-style: solid;
-            box-shadow: 0 0 20px #ffff00;
         }
-        
-        .floating-elements {
+
+        .emergency-portal {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -996;
-        }
-        
-        .floating-element {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            background: conic-gradient(from 0deg, #ff0000, #0000ff, #00ff00, #ffff00, #ff00ff);
-            border-radius: 50%;
-            animation: float 25s infinite linear;
-            opacity: 0.6;
-            filter: blur(10px);
-        }
-        
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            20% { transform: translate(100vw, 40vh) rotate(72deg) scale(1.3); }
-            40% { transform: translate(60vw, 80vh) rotate(144deg) scale(0.8); }
-            60% { transform: translate(20vw, 20vh) rotate(216deg) scale(1.2); }
-            80% { transform: translate(80vw, 60vh) rotate(288deg) scale(0.9); }
-            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
-        }
-        
-        .text-corruption {
-            position: relative;
-            display: inline-block;
-            transition: all 0.3s;
-        }
-        
-        .text-corruption:hover {
-            animation: corrupt 0.6s forwards;
-        }
-        
-        @keyframes corrupt {
-            0% { filter: blur(0); color: #0f0; transform: scale(1); }
-            50% { filter: blur(5px); color: #f0f; transform: scale(1.3); }
-            100% { filter: blur(0); color: #0ff; transform: skewX(15deg) scale(1.1); }
-        }
-        
-        footer {
-            background: rgba(17, 17, 17, 0.9);
-            padding: 80px 20px;
-            text-align: center;
-            border-top: 8px solid #ff00ff;
-            margin-top: 100px;
-            position: relative;
-            backdrop-filter: blur(10px);
-        }
-        
-        .conspiracy-theory {
-            font-size: 0.9rem;
-            opacity: 0.7;
-            margin-top: 30px;
-            line-height: 1.6;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: #00ffff;
-        }
-        
-        .reality-portal {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 3rem;
+            right: 3rem;
             width: 120px;
             height: 120px;
-            background: radial-gradient(circle, #ff00ff, #00ffff, #ffff00);
+            background: radial-gradient(circle, #ff0000, #ff00ff, #0000ff);
             border-radius: 50%;
-            animation: portalPulse 4s infinite alternate;
+            animation: emergencyPulse 3s infinite alternate;
             cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 0 50px #ff00ff;
+            z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            font-size: 0.8rem;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
             text-align: center;
-            padding: 10px;
-            mix-blend-mode: difference;
-            transition: all 0.3s;
-            font-family: 'Press Start 2P', cursive;
-        }
-        
-        .reality-portal:hover {
-            transform: scale(1.2);
-            animation-duration: 1s;
-        }
-        
-        @keyframes portalPulse {
-            0% { transform: scale(1); box-shadow: 0 0 50px #ff00ff; }
-            100% { transform: scale(1.2); box-shadow: 0 0 80px #00ffff, 0 0 120px #ffff00; }
-        }
-        
-        .output-terminal {
-            background: rgba(0, 0, 0, 0.9);
-            border: 3px solid #00ff00;
-            padding: 25px;
-            margin-top: 30px;
-            font-family: 'Courier New', monospace;
-            min-height: 200px;
-            max-height: 400px;
-            overflow-y: auto;
-            border-radius: 15px;
-            position: relative;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.2);
-        }
-        
-        .terminal-text {
-            color: #00ff00;
-            line-height: 1.5;
-            font-size: 1.1rem;
-        }
-        
-        .blink {
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        .dimension-window {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 80vh;
-            background: rgba(0, 0, 0, 0.95);
-            border: 5px solid #ff00ff;
-            z-index: 2000;
-            display: none;
-            padding: 40px;
-            overflow: auto;
-            box-shadow: 0 0 100px #ff00ff;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .close-portal {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            background: #ff0000;
             color: white;
-            border: none;
-            padding: 12px 18px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            font-family: 'Press Start 2P', cursive;
-            transition: all 0.3s;
+            text-shadow: 0 0 10px #000;
         }
-        
-        .close-portal:hover {
-            background: #cc0000;
-            transform: scale(1.1);
+
+        @keyframes emergencyPulse {
+            0% { transform: scale(1); box-shadow: 0 0 50px #ff0000; }
+            100% { transform: scale(1.2); box-shadow: 0 0 80px #ff00ff, 0 0 120px #0000ff; }
         }
-        
-        .audio-visualizer {
-            width: 100%;
-            height: 200px;
-            background: rgba(0, 0, 0, 0.7);
-            margin: 40px 0;
-            position: relative;
-            overflow: hidden;
-            border-radius: 15px;
-            border: 2px solid #ff00ff;
-        }
-        
-        .visualizer-bar {
-            position: absolute;
-            bottom: 0;
-            width: 10px;
-            background: linear-gradient(to top, #ff0000, #ffff00);
-            transition: height 0.1s;
-            border-radius: 5px 5px 0 0;
-        }
-        
-        .quantum-field {
+
+        .quantum-particle {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
             pointer-events: none;
-            z-index: -995;
+            z-index: -997;
+            animation: particleFloat 20s linear infinite;
         }
-        
+
+        @keyframes particleFloat {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translate(100vw, 100vh) rotate(360deg) scale(0); opacity: 0; }
+        }
+
         .reality-fissure {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 3px;
             background: linear-gradient(90deg, transparent, #ff00ff, transparent);
-            animation: fissureMove 10s linear infinite;
+            animation: fissureMove 15s linear infinite;
+            pointer-events: none;
+            z-index: -996;
         }
-        
+
         @keyframes fissureMove {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
-        
-        .easter-egg {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background: transparent;
-            z-index: 5000;
-            cursor: pointer;
-            border-radius: 50%;
-            transition: all 0.3s;
+
+        .hidden {
+            display: none !important;
         }
-        
-        .easter-egg:hover {
-            background: rgba(255, 255, 0, 0.3);
-            box-shadow: 0 0 20px yellow;
+
+        .fade-in {
+            animation: fadeIn 2s ease-in-out forwards;
         }
-        
-        .secret-achievement {
-            background: linear-gradient(45deg, #ff0000, #0000ff, #00ff00);
-            padding: 30px;
-            margin: 40px 0;
-            border-radius: 20px;
-            text-align: center;
-            animation: buttonGradient 4s ease infinite;
-            border: 3px solid gold;
-            box-shadow: 0 0 50px gold;
-        }
-        
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; letter-spacing: 8px; }
-            .nav-links { flex-direction: column; align-items: center; }
-            section { padding: 30px 20px; }
-            .content-grid { grid-template-columns: 1fr; }
-            .hidden-nav { top: 10px; right: 10px; padding: 10px; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <canvas class="matrix-bg" id="matrix"></canvas>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <!-- Background Elements -->
+    <canvas class="matrix-rain" id="matrixCanvas"></canvas>
     <div class="reality-distortion"></div>
-    <div class="quantum-field" id="quantumField"></div>
-    
-    <!-- Matrix Terminal Login -->
-    <div class="matrix-terminal" id="matrixTerminal">
+    <div class="quantum-portal" style="top: 10%; left: 10%;"></div>
+    <div class="quantum-portal" style="top: 70%; left: 80%;"></div>
+
+    <!-- Quantum Particles -->
+    <div id="particleContainer"></div>
+
+    <!-- Reality Fissures -->
+    <div id="fissureContainer"></div>
+
+    <!-- Terminal Overlay -->
+    <div class="terminal-overlay" id="terminal">
         <div class="terminal-content">
-            <h1 class="glitch-text" data-text="QUANTUM REALITY ACCESS">QUANTUM REALITY ACCESS</h1>
-            <p class="terminal-text">> INITIATING SYSTEM BOOT...</p>
-            <p class="terminal-text">> MATRIX PROTOCOL ENGAGED</p>
-            <p class="terminal-text">> WARNING: REALITY INSTABILITY DETECTED</p>
-            <p class="terminal-text">> BYPASSING SECURITY PROTOCOLS...</p>
-            <p class="terminal-text blink">> ACCESS GRANTED - WELCOME TO THE REALITY SIMULATOR</p>
-        </div>
-    </div>
-    
-    <!-- Hidden Navigation -->
-    <div class="hidden-nav" id="hiddenNav" style="display: none;">
-        <ul class="nav-links">
-            <li><a onclick="showRealityFissure()">REALITY FISSURE</a></li>
-            <li><a onclick="activateNeuralInterface()">NEURAL INTERFACE</a></li>
-            <li><a onclick="summonEldritchBeing()">ELDRITCH BEING</a></li>
-            <li><a onclick="initiateTimeParadox()">TIME PARADOX</a></li>
-            <li><a onclick="accessMainframe()">MAINFRAME ACCESS</a></li>
-        </ul>
-    </div>
-    
-    <div class="floating-elements">
-        <div class="floating-element" style="top:10%; left:5%; animation-delay:0s; width:120px; height:120px;"></div>
-        <div class="floating-element" style="top:70%; left:85%; animation-delay:3s; width:90px; height:90px;"></div>
-        <div class="floating-element" style="top:40%; left:70%; animation-delay:6s; width:150px; height:150px;"></div>
-        <div class="floating-element" style="top:20%; left:80%; animation-delay:9s; width:60px; height:60px;"></div>
-        <div class="floating-element" style="top:80%; left:20%; animation-delay:12s; width:110px; height:110px;"></div>
-    </div>
-    
-    <div class="reality-portal" id="realityPortal" style="display: none;">
-        EMERGENCY REALITY EXIT
-    </div>
-    
-    <div class="dimension-window" id="dimensionWindow">
-        <button class="close-portal" onclick="closeDimension()">X</button>
-        <h2>ALTERNATE REALITY ACCESSED</h2>
-        <div class="output-terminal">
-            <div class="terminal-text" id="dimensionText"></div>
+            <div class="glitch-text" data-text="QUANTUM REALITY">QUANTUM REALITY</div>
+            <div class="terminal-line">> INITIATING HYPERSPACE PROTOCOL...</div>
+            <div class="terminal-line">> QUANTUM ENTANGLEMENT ESTABLISHED</div>
+            <div class="terminal-line">> REALITY MATRIX SYNCHRONIZING...</div>
+            <div class="terminal-line blink">> ACCESS GRANTED - WELCOME TO THE SIMULATION</div>
         </div>
     </div>
 
-    <!-- Easter Eggs -->
-    <div class="easter-egg" style="top: 5%; left: 5%;" onclick="secretEasterEgg(1)"></div>
-    <div class="easter-egg" style="top: 95%; left: 95%;" onclick="secretEasterEgg(2)"></div>
-    <div class="easter-egg" style="top: 50%; left: 2%;" onclick="secretEasterEgg(3)"></div>
-    <div class="easter-egg" style="top: 10%; left: 90%;" onclick="secretEasterEgg(4)"></div>
-
-    <header id="mainHeader" style="display: none;">
-        <h1 class="glitch-text" data-text="QUANTUM PSYCHEDELIC REALITY SIMULATOR">QUANTUM PSYCHEDELIC REALITY SIMULATOR</h1>
-        <p class="subtitle">WARNING: REALITY MAY BE UNSTABLE BEYOND THIS POINT</p>
-        <div class="audio-visualizer" id="audioVisualizer"></div>
-    </header>
-    
-    <main id="mainContent" style="display: none;">
-        <div class="reality-container">
-            <!-- Секция с загадками и кодами -->
-            <section id="quantum-riddles">
-                <h2 class="glitch-text" data-text="QUANTUM RIDDLES">QUANTUM RIDDLES</h2>
-                <p>Solve these paradoxes to unlock hidden dimensions of reality. Each correct answer reveals new pathways.</p>
-                
-                <div class="content-grid">
-                    <div class="card">
-                        <h3>THE OBSERVER'S DILEMMA</h3>
-                        <p>What has roots that nobody sees,<br>
-                        Is taller than trees,<br>
-                        Up, up it goes,<br>
-                        And yet never grows?</p>
-                        <input type="text" class="code-input" id="riddle1" placeholder="Enter answer...">
-                        <button class="psychedelic-button" onclick="checkRiddle(1)">VERIFY ANSWER</button>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="riddle1Output">AWAITING QUANTUM SOLUTION...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>THE PARADOX GATE</h3>
-                        <p>I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</p>
-                        <input type="text" class="code-input" id="riddle2" placeholder="Enter answer...">
-                        <button class="psychedelic-button" onclick="checkRiddle(2)">VERIFY ANSWER</button>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="riddle2Output">PARADOX UNRESOLVED...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>THE INFINITY PUZZLE</h3>
-                        <p>What can travel around the world while staying in a corner?</p>
-                        <input type="text" class="code-input" id="riddle3" placeholder="Enter answer...">
-                        <button class="psychedelic-button" onclick="checkRiddle(3)">VERIFY ANSWER</button>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="riddle3Output">INFINITY AWAITS...</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="reality-codes">
-                <h2 class="glitch-text" data-text="REALITY CODES">REALITY CODES</h2>
-                <p>Input these codes to manipulate the fabric of reality. Some codes are hidden throughout the site.</p>
-                
-                <div class="content-grid">
-                    <div class="card">
-                        <h3>MATRIX OVERRIDE</h3>
-                        <p>Enter code to bypass reality protocols:</p>
-                        <input type="text" class="code-input" id="code1" placeholder="Code: TR1N1TY">
-                        <button class="psychedelic-button" onclick="executeCode(1)">EXECUTE CODE</button>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="code1Output">SYSTEM READY FOR OVERRIDE</div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>TEMPORAL SEQUENCE</h3>
-                        <p>Input the correct time sequence:</p>
-                        <input type="text" class="code-input" id="code2" placeholder="Sequence: 4 8 15 16 23 42">
-                        <button class="psychedelic-button" onclick="executeCode(2)">EXECUTE CODE</button>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="code2Output">TEMPORAL SYSTEMS ONLINE</div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>QUANTUM DECRYPTION</h3>
-                        <p>Decrypt the quantum message:</p>
-                        <input type="text" class="code-input" id="code3" placeholder="Key: REDP1LL">
-                        <button class="psychedelic-button" onclick="executeCode(3)">EXECUTE CODE</button>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="code3Output">AWAITING DECRYPTION KEY</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="secret-portals">
-                <h2 class="glitch-text" data-text="SECRET PORTALS">SECRET PORTALS</h2>
-                <p>Hidden gateways to alternate realities. Find the triggers to activate them.</p>
-                
-                <div class="content-grid">
-                    <div class="card">
-                        <h3>THE LOOKING GLASS</h3>
-                        <p>Click the hidden symbols in the correct order:</p>
-                        <div style="text-align: center; margin: 20px 0;">
-                            <button class="secret-button" onclick="portalSequence(1)">Ψ</button>
-                            <button class="secret-button" onclick="portalSequence(2)">Δ</button>
-                            <button class="secret-button" onclick="portalSequence(3)">Ω</button>
-                            <button class="secret-button" onclick="portalSequence(4)">Φ</button>
-                        </div>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="portalOutput">PORTAL SEQUENCE: _ _ _ _</div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>VOID WALKER</h3>
-                        <p>Navigate through the void by solving this puzzle:</p>
-                        <p style="font-family: monospace; text-align: center; margin: 20px 0; font-size: 1.3rem;">
-                            2 3 5 7 11 13 ?
-                        </p>
-                        <input type="text" class="code-input" id="voidPuzzle" placeholder="Next prime number?">
-                        <button class="psychedelic-button" onclick="solveVoidPuzzle()">ENTER THE VOID</button>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="voidOutput">VOID AWAITS...</div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <h3>DREAM WALKER</h3>
-                        <p>Access the dream realm through subconscious triggers:</p>
-                        <button class="psychedelic-button" onclick="startDreamSequence()">INITIATE DREAM STATE</button>
-                        <div class="output-terminal">
-                            <div class="terminal-text" id="dreamOutput">CONSCIOUSNESS LEVEL: AWARE</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Секция достижений -->
-            <section id="achievements" style="display: none;">
-                <h2 class="glitch-text" data-text="QUANTUM ACHIEVEMENTS">QUANTUM ACHIEVEMENTS</h2>
-                <p>Your progress in mastering the fabric of reality:</p>
-                <div class="secret-achievement" id="mainAchievement">
-                    <h3>QUANTUM EXPLORER</h3>
-                    <p>You have discovered the hidden truths of reality. Your consciousness has expanded beyond normal limits.</p>
-                    <div class="output-terminal">
-                        <div class="terminal-text">REALITY LEVEL: ENLIGHTENED<br>CONGRATULATIONS, TRAVELER</div>
-                    </div>
-                </div>
-            </section>
+    <!-- Main Reality Interface -->
+    <div class="main-content" id="mainContent">
+        <!-- Navigation Matrix -->
+        <div class="nav-matrix">
+            <div class="nav-grid">
+                <button class="nav-button" onclick="activateRealityFissure()">REALITY FISSURE</button>
+                <button class="nav-button" onclick="activateNeuralInterface()">NEURAL INTERFACE</button>
+                <button class="nav-button" onclick="summonEldritch()">ELDRITCH BEING</button>
+                <button class="nav-button" onclick="initiateParadox()">TIME PARADOX</button>
+            </div>
         </div>
-    </main>
-    
-    <footer id="mainFooter" style="display: none;">
-        <p class="glitch-text" data-text="CONTACT WITH MULTIDIMENSIONAL ENTITIES">CONTACT WITH MULTIDIMENSIONAL ENTITIES</p>
-        <p>To contact the site creators, use the <span class="text-corruption">telepathic interface</span> or <span class="text-corruption">quantum entanglement</span>.</p>
-        <p class="conspiracy-theory">WARNING: Prolonged exposure to this website may cause irreversible changes in reality perception, chronological paradoxes and existential crises. The administration is not responsible for consequences of interaction with the content. Reality stability is not guaranteed. If you experience temporal displacement, contact your local time enforcement agency.</p>
-    </footer>
+
+        <!-- Quantum Header -->
+        <div class="quantum-header">
+            <div class="header-bg"></div>
+            <h1 class="glitch-text" data-text="PSYCHEDELIC REALITY SIMULATOR">PSYCHEDELIC REALITY SIMULATOR</h1>
+            <p class="terminal-line">WARNING: REALITY INTEGRITY AT 42% - PROCEED WITH CAUTION</p>
+        </div>
+
+        <!-- Reality Grid -->
+        <div class="reality-grid">
+            <!-- Quantum Riddles -->
+            <div class="quantum-card">
+                <div class="card-content">
+                    <h3 class="card-title">QUANTUM ENIGMAS</h3>
+                    <p class="card-description">Solve these reality-bending paradoxes to unlock hidden dimensions of consciousness.</p>
+                    
+                    <div class="riddle-section">
+                        <h4>THE OBSERVER'S DILEMMA</h4>
+                        <p>What has roots that nobody sees, is taller than trees, up, up it goes, and yet never grows?</p>
+                        <input type="text" class="reality-input" id="riddle1" placeholder="Enter quantum solution...">
+                        <button class="psychedelic-button" onclick="verifyRiddle(1)">VERIFY REALITY</button>
+                        <div class="reality-output" id="output1">AWAITING COGNITIVE INPUT...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reality Codes -->
+            <div class="quantum-card">
+                <div class="card-content">
+                    <h3 class="card-title">MATRIX CODES</h3>
+                    <p class="card-description">Input these cryptographic sequences to manipulate the fabric of spacetime.</p>
+                    
+                    <div class="code-section">
+                        <h4>QUANTUM OVERRIDE</h4>
+                        <input type="text" class="reality-input" id="code1" placeholder="Enter: TR1N1TY">
+                        <button class="psychedelic-button" onclick="executeOverride(1)">INITIATE OVERRIDE</button>
+                        <div class="reality-output" id="codeOutput1">SYSTEM READY FOR QUANTUM INJECTION</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Secret Portals -->
+            <div class="quantum-card">
+                <div class="card-content">
+                    <h3 class="card-title">DIMENSIONAL PORTALS</h3>
+                    <p class="card-description">Activate hidden gateways to alternate realities through symbolic sequences.</p>
+                    
+                    <div class="portal-section">
+                        <h4>SYMBOLIC SEQUENCE</h4>
+                        <div class="symbol-grid">
+                            <button class="reality-symbol" onclick="addPortalSymbol(1)">Ψ</button>
+                            <button class="reality-symbol" onclick="addPortalSymbol(2)">Δ</button>
+                            <button class="reality-symbol" onclick="addPortalSymbol(3)">Ω</button>
+                            <button class="reality-symbol" onclick="addPortalSymbol(4)">Φ</button>
+                        </div>
+                        <div class="reality-output" id="portalOutput">SEQUENCE: [ _ _ _ _ ]</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More sections would continue... -->
+        </div>
+
+        <!-- Emergency Reality Exit -->
+        <div class="emergency-portal" onclick="emergencyRealityExit()">
+            EMERGENCY<br>REALITY<br>EXIT
+        </div>
+    </div>
 
     <script>
-        // Автоматический запуск без ввода кода
-        setTimeout(() => {
-            document.getElementById('matrixTerminal').style.display = 'none';
-            document.getElementById('mainHeader').style.display = 'block';
-            document.getElementById('mainContent').style.display = 'block';
-            document.getElementById('mainFooter').style.display = 'block';
-            document.getElementById('hiddenNav').style.display = 'block';
-            document.getElementById('realityPortal').style.display = 'flex';
-            startRealitySimulation();
-        }, 5000);
-
-        // Matrix background
-        const canvas = document.getElementById('matrix');
+        // Initialize Matrix Rain
+        const canvas = document.getElementById('matrixCanvas');
         const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const letters = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZΨΦΓΛΣΔΘΞΠΩ';
-        const lettersArray = letters.split('');
-        
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZΨΦΓΛΣΔΘΞΠΩ';
+        const charArray = chars.split('');
         const fontSize = 16;
         const columns = canvas.width / fontSize;
-        
         const drops = [];
-        
-        for(let i = 0; i < columns; i++) {
-            drops[i] = Math.random() * canvas.height;
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height);
         }
-        
+
         function drawMatrix() {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             ctx.fillStyle = '#0F0';
             ctx.font = fontSize + 'px monospace';
-            
-            for(let i = 0; i < drops.length; i++) {
-                const text = lettersArray[Math.floor(Math.random() * lettersArray.length)];
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
                 
-                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
-                
                 drops[i]++;
             }
         }
 
-        // ФУНКЦИИ ДЛЯ ЗАГАДОК И КОДОВ
+        setInterval(drawMatrix, 35);
+
+        // Custom Cursor
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Quantum Particles
+        function createParticles() {
+            const container = document.getElementById('particleContainer');
+            for (let i = 0; i < 5; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'quantum-particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 30000);
+            }
+        }
+
+        setInterval(createParticles, 2000);
+
+        // Reality Fissures
+        function createFissures() {
+            const container = document.getElementById('fissureContainer');
+            const fissure = document.createElement('div');
+            fissure.className = 'reality-fissure';
+            fissure.style.top = Math.random() * 100 + 'vh';
+            fissure.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            container.appendChild(fissure);
+            
+            setTimeout(() => fissure.remove(), 30000);
+        }
+
+        setInterval(createFissures, 5000);
+
+        // Terminal Sequence
+        setTimeout(() => {
+            document.getElementById('terminal').classList.add('hidden');
+            document.getElementById('mainContent').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('mainContent').classList.add('fade-in');
+            }, 100);
+        }, 5000);
+
+        // Game Logic
         let portalSequence = [];
-        let dreamState = 0;
-        let easterEggCount = 0;
-        let achievementsUnlocked = 0;
-        
-        function checkRiddle(riddleNum) {
-            const input = document.getElementById(`riddle${riddleNum}`).value.trim().toLowerCase();
-            const output = document.getElementById(`riddle${riddleNum}Output`);
+
+        function verifyRiddle(num) {
+            const input = document.getElementById('riddle' + num).value.toLowerCase();
+            const output = document.getElementById('output' + num);
             
             const answers = {
-                1: ['mountain', 'mountains'],
-                2: ['echo', 'an echo'],
-                3: ['stamp', 'a stamp', 'postage stamp']
+                1: ['mountain', 'mountains']
             };
-            
-            if (answers[riddleNum].includes(input)) {
-                output.innerHTML = `QUANTUM SOLUTION VERIFIED!<br>REALITY FRAGMENT UNLOCKED<br><span class="blink">ACCESSING NEW DIMENSION...</span>`;
+
+            if (answers[num].includes(input)) {
+                output.innerHTML = 'QUANTUM SOLUTION ACCEPTED<br>Reality fragment synchronized';
                 output.style.color = '#0f0';
-                achievementsUnlocked++;
-                checkAchievements();
-                
+                createRealityDistortion();
             } else {
-                output.innerHTML = `PARADOX DETECTED<br>REALITY REJECTS YOUR ANSWER<br>TRY AGAIN, QUANTUM TRAVELER`;
+                output.innerHTML = 'PARADOX DETECTED<br>Reality rejects your answer';
                 output.style.color = '#f00';
             }
         }
-        
-        function executeCode(codeNum) {
-            const input = document.getElementById(`code${codeNum}`).value.trim().toUpperCase();
-            const output = document.getElementById(`code${codeNum}Output`);
+
+        function executeOverride(num) {
+            const input = document.getElementById('code' + num).value.toUpperCase();
+            const output = document.getElementById('codeOutput' + num);
             
             const codes = {
-                1: ['TR1N1TY', 'NEO', 'MORPHEUS'],
-                2: ['4 8 15 16 23 42', '4815162342'],
-                3: ['REDP1LL', 'BLUEP1LL', 'MATRIX']
+                1: ['TR1N1TY', 'NEO', 'MORPHEUS']
             };
-            
-            if (codes[codeNum].includes(input)) {
-                output.innerHTML = `CODE ACCEPTED<br>REALITY PARAMETERS MODIFIED<br><span class="blink">SYSTEM OVERRIDE COMPLETE</span>`;
+
+            if (codes[num].includes(input)) {
+                output.innerHTML = 'MATRIX OVERRIDE SUCCESSFUL<br>Reality parameters modified';
                 output.style.color = '#0f0';
-                achievementsUnlocked++;
-                checkAchievements();
-                
-                if (codeNum === 1) window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
-                if (codeNum === 2) createLostEffect();
-                if (codeNum === 3) createRedPillEffect();
-                
+                window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
             } else {
-                output.innerHTML = `INVALID CODE<br>REALITY PROTOCOLS REJECT INPUT<br>CONTINUE DECRYPTION ATTEMPT`;
+                output.innerHTML = 'OVERRIDE FAILED<br>Continue decryption protocols';
                 output.style.color = '#f00';
             }
         }
-        
-        function portalSequence(symbol) {
+
+        function addPortalSymbol(symbol) {
             portalSequence.push(symbol);
             const output = document.getElementById('portalOutput');
-            let sequenceDisplay = 'PORTAL SEQUENCE: ';
+            let display = 'SEQUENCE: [ ';
             
             for (let i = 0; i < 4; i++) {
-                sequenceDisplay += portalSequence[i] ? ['Ψ', 'Δ', 'Ω', 'Φ'][portalSequence[i]-1] : '_';
-                sequenceDisplay += ' ';
+                display += portalSequence[i] ? ['Ψ', 'Δ', 'Ω', 'Φ'][portalSequence[i]-1] : '_';
+                display += ' ';
             }
+            display += ']';
             
-            output.innerHTML = sequenceDisplay;
-            
+            output.innerHTML = display;
+
             if (portalSequence.join('') === '2413') {
-                output.innerHTML = `PORTAL SEQUENCE CORRECT!<br><span class="blink">TRANSDIMENSIONAL GATE ACTIVATED</span>`;
-                createPortalEffect();
+                output.innerHTML = 'DIMENSIONAL PORTAL ACTIVATED<br>Reality bridge established';
+                activatePortal();
                 portalSequence = [];
-                achievementsUnlocked++;
-                checkAchievements();
             } else if (portalSequence.length >= 4) {
-                output.innerHTML = `SEQUENCE FAILED<br>REALIGNING QUANTUM SIGNATURE...`;
+                output.innerHTML = 'SEQUENCE CORRUPTED<br>Realigning quantum signature...';
                 portalSequence = [];
-                setTimeout(() => {
-                    output.innerHTML = 'PORTAL SEQUENCE: _ _ _ _';
-                }, 2000);
-            }
-        }
-        
-        function solveVoidPuzzle() {
-            const input = document.getElementById('voidPuzzle').value.trim();
-            const output = document.getElementById('voidOutput');
-            
-            if (input === '17' || input === 'seventeen') {
-                output.innerHTML = `VOID NAVIGATION SUCCESSFUL<br><span class="blink">ENTERING THE EMPTINESS...</span>`;
-                createVoidEffect();
-                achievementsUnlocked++;
-                checkAchievements();
-            } else {
-                output.innerHTML = `VOID REJECTS YOUR PATH<br>THE ABYSS STARES BACK<br>TRY AGAIN`;
-            }
-        }
-        
-        function startDreamSequence() {
-            const output = document.getElementById('dreamOutput');
-            dreamState++;
-            
-            const states = [
-                "CONSCIOUSNESS LEVEL: AWARE",
-                "ENTERING DREAM STATE...",
-                "SUBCONSCIOUS BARRIERS BREACHED",
-                "DREAM REALM ACCESSED",
-                "LUCID DREAMING ACTIVATED",
-                "REALITY AND DREAM MERGING...",
-                "WAKING UP IS NO LONGER AN OPTION"
-            ];
-            
-            output.innerHTML = states[Math.min(dreamState-1, states.length-1)];
-            
-            if (dreamState >= states.length) {
-                output.innerHTML += `<br><span class="blink">YOU ARE NOW TRAPPED IN THE DREAM</span>`;
-                createDreamTrapEffect();
-                achievementsUnlocked++;
-                checkAchievements();
-            }
-        }
-        
-        // Easter Egg functions
-        function secretEasterEgg(eggNum) {
-            easterEggCount++;
-            const messages = [
-                "SECRET FOUND: QUANTUM ENIGMA ACTIVATED",
-                "HIDDEN REALITY: YOU SEE BEYOND THE VEIL",
-                "FORBIDDEN KNOWLEDGE: REALITY GLITCHES",
-                "ULTIMATE TRUTH: YOU HAVE AWAKENED"
-            ];
-            
-            if (easterEggCount <= messages.length) {
-                showOutput(messages[easterEggCount-1], "dimensionText");
-                openDimensionWindow();
-            }
-            
-            if (easterEggCount >= 3) {
-                achievementsUnlocked++;
-                checkAchievements();
-            }
-        }
-        
-        function checkAchievements() {
-            if (achievementsUnlocked >= 5 && document.getElementById('achievements').style.display === 'none') {
-                document.getElementById('achievements').style.display = 'block';
-                document.getElementById('mainAchievement').scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        // Special Effects
-        function createMountainEffect() {
-            const mountain = document.createElement('div');
-            mountain.style.position = 'fixed';
-            mountain.style.bottom = '0';
-            mountain.style.left = '50%';
-            mountain.style.transform = 'translateX(-50%)';
-            mountain.style.width = '300px';
-            mountain.style.height = '200px';
-            mountain.style.background = 'linear-gradient(45deg, #333, #666)';
-            mountain.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
-            mountain.style.zIndex = '998';
-            document.body.appendChild(mountain);
-            
+        function createRealityDistortion() {
+            document.body.style.animation = 'distortion 1s';
             setTimeout(() => {
-                mountain.remove();
-            }, 5000);
-        }
-        
-        function createEchoEffect() {
-            for (let i = 0; i < 5; i++) {
-                setTimeout(() => {
-                    const echo = document.createElement('div');
-                    echo.style.position = 'fixed';
-                    echo.style.top = '50%';
-                    echo.style.left = '50%';
-                    echo.style.transform = 'translate(-50%, -50%)';
-                    echo.style.width = `${100 + i * 50}px`;
-                    echo.style.height = `${100 + i * 50}px`;
-                    echo.style.border = '2px solid #0ff';
-                    echo.style.borderRadius = '50%';
-                    echo.style.animation = `realityWarp ${1 + i * 0.5}s forwards`;
-                    echo.style.zIndex = '997';
-                    document.body.appendChild(echo);
-                    
-                    setTimeout(() => {
-                        echo.remove();
-                    }, 2000);
-                }, i * 200);
-            }
+                document.body.style.animation = '';
+            }, 1000);
         }
 
-        function createLostEffect() {
-            document.body.style.background = "radial-gradient(circle, #000000, #001122)";
-            setTimeout(() => {
-                document.body.style.background = "#000";
-            }, 3000);
-        }
-
-        function createRedPillEffect() {
-            const pill = document.createElement('div');
-            pill.style.position = 'fixed';
-            pill.style.top = '50%';
-            pill.style.left = '50%';
-            pill.style.transform = 'translate(-50%, -50%)';
-            pill.style.width = '100px';
-            pill.style.height = '50px';
-            pill.style.background = 'linear-gradient(45deg, #ff0000, #cc0000)';
-            pill.style.borderRadius = '25px';
-            pill.style.zIndex = '999';
-            pill.style.animation = 'portalPulse 0.5s infinite alternate';
-            document.body.appendChild(pill);
-            
-            setTimeout(() => {
-                pill.remove();
-                document.body.style.filter = 'hue-rotate(180deg)';
-                setTimeout(() => {
-                    document.body.style.filter = 'none';
-                }, 2000);
-            }, 2000);
-        }
-
-        function createPortalEffect() {
+        function activatePortal() {
             const portal = document.createElement('div');
             portal.style.position = 'fixed';
             portal.style.top = '50%';
@@ -1166,244 +794,53 @@
             portal.style.transform = 'translate(-50%, -50%)';
             portal.style.width = '400px';
             portal.style.height = '400px';
-            portal.style.background = 'radial-gradient(circle, #ff00ff, #00ffff, #ffff00)';
+            portal.style.background = 'conic-gradient(from 0deg, #ff0000, #ff00ff, #0000ff, #00ffff, #00ff00, #ffff00, #ff0000)';
             portal.style.borderRadius = '50%';
-            portal.style.zIndex = '998';
-            portal.style.animation = 'realityWarp 2s infinite';
+            portal.style.animation = 'portalSpin 2s linear infinite';
+            portal.style.zIndex = '9998';
             document.body.appendChild(portal);
             
-            setTimeout(() => {
-                portal.remove();
-            }, 5000);
+            setTimeout(() => portal.remove(), 3000);
         }
 
-        function createVoidEffect() {
-            document.body.style.background = '#000';
-            const voidElements = document.querySelectorAll('*');
-            voidElements.forEach(el => {
-                if (el !== document.body) {
-                    el.style.opacity = '0.3';
-                }
-            });
-            
-            setTimeout(() => {
-                voidElements.forEach(el => {
-                    if (el !== document.body) {
-                        el.style.opacity = '1';
-                    }
-                });
-            }, 3000);
-        }
-
-        function createDreamTrapEffect() {
-            document.body.style.animation = 'gradientShift 1s infinite';
-            setTimeout(() => {
-                document.body.style.animation = '';
-            }, 5000);
-        }
-
-        // Utility functions
-        function showOutput(text, elementId) {
-            const element = document.getElementById(elementId);
-            element.innerHTML = text;
-        }
-
-        function openDimensionWindow() {
-            document.getElementById('dimensionWindow').style.display = 'block';
-        }
-
-        function closeDimension() {
-            document.getElementById('dimensionWindow').style.display = 'none';
-        }
-
-        // Navigation functions
-        function showRealityFissure() {
-            for(let i = 0; i < 10; i++) {
-                setTimeout(createRealityFissure, i * 200);
+        function emergencyRealityExit() {
+            if (confirm('WARNING: This will initiate emergency reality termination. Continue?')) {
+                document.body.innerHTML = '<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; justify-content: center; align-items: center; color: #f00; font-family: monospace; font-size: 3rem; text-align: center;">REALITY TERMINATION IN PROGRESS<br><span style="font-size: 1rem; color: #0f0;">If you can read this, the exit failed</span></div>';
+                setTimeout(() => location.reload(), 4000);
             }
-            showOutput("REALITY FISSURE ACTIVATED. SPACETIME INTEGRITY COMPROMISED. PARADOX DETECTED.", "dimensionText");
-            openDimensionWindow();
+        }
+
+        // Navigation Functions
+        function activateRealityFissure() {
+            for(let i = 0; i < 10; i++) {
+                setTimeout(createFissures, i * 200);
+            }
+            alert('REALITY FISSURE ACTIVATED - Spacetime integrity compromised');
         }
 
         function activateNeuralInterface() {
-            const outputs = [
-                "NEURAL INTERFACE ESTABLISHED. DOWNLOADING COGNITIVE ENHANCEMENT PROTOCOLS...",
-                "SYNAPTIC REARRANGEMENT IN PROGRESS. PREPARE FOR CONSCIOUSNESS EXPANSION.",
-                "DOPAMINE RECEPTORS OVERLOADED. SEROTONIN LEVELS CRITICAL. ENJOY THE RIDE.",
-                "NEUROTRANSMITTER CASCADE INITIATED. REALITY PERCEPTION ALTERED."
-            ];
-            showOutput(outputs[Math.floor(Math.random() * outputs.length)], "dimensionText");
-            openDimensionWindow();
-            
-            document.body.style.filter = "hue-rotate(180deg)";
+            document.body.style.filter = 'hue-rotate(180deg)';
             setTimeout(() => {
-                document.body.style.filter = "none";
+                document.body.style.filter = 'none';
             }, 2000);
+            alert('NEURAL INTERFACE ENGAGED - Consciousness expansion initiated');
         }
 
-        function summonEldritchBeing() {
-            const beings = [
-                "CTHULHU AWAKENS. PRAISE THE GREAT OLD ONE.",
-                "NYARLATHOTEP MANIFESTS. REALITY TREMBLES.",
-                "AZATHOTH STIRS. THE BLIND IDIOT GOD DREAMS.",
-                "SHUB-NIGGURATH APPROACHES. THE BLACK GOAT OF THE WOODS WITH A THOUSAND YOUNG."
-            ];
-            showOutput(beings[Math.floor(Math.random() * beings.length)], "dimensionText");
-            openDimensionWindow();
-            
-            document.body.style.background = "radial-gradient(circle, #000000, #330000)";
+        function summonEldritch() {
+            document.body.style.background = 'radial-gradient(circle, #000000, #330000)';
             setTimeout(() => {
-                document.body.style.background = "#000";
+                document.body.style.background = '#000';
             }, 3000);
+            alert('ELDRITCH BEING SUMMONED - Reality trembles');
         }
 
-        function initiateTimeParadox() {
-            const paradoxes = [
-                "GRANDFATHER PARADOX INITIATED. YOUR EXISTENCE IS NOW QUESTIONABLE.",
-                "BOOTSTRAP PARADOX ACTIVATED. INFORMATION WITHOUT ORIGIN DETECTED.",
-                "POLCHINSKY'S PARADOX TRIGGERED. BILLIARD BALLS DEFY CAUSALITY.",
-                "TEMPORAL LOOP CREATED. YOU WILL INITIATE THIS PARADOX AGAIN IN 5 SECONDS."
-            ];
-            showOutput(paradoxes[Math.floor(Math.random() * paradoxes.length)], "dimensionText");
-            openDimensionWindow();
-            
-            document.documentElement.style.animation = "realityWarp 2s infinite";
+        function initiateParadox() {
+            document.documentElement.style.animation = 'distortion 2s infinite';
             setTimeout(() => {
-                document.documentElement.style.animation = "none";
+                document.documentElement.style.animation = 'none';
             }, 5000);
+            alert('TIME PARADOX INITIATED - Causality violated');
         }
-
-        function accessMainframe() {
-            const messages = [
-                "MAINFRAME ACCESS GRANTED. DOWNLOADING CLASSIFIED DATA...",
-                "SYSTEM BREACH DETECTED. INITIATING COUNTERMEASURES...",
-                "ROOT ACCESS ACHIEVED. WELCOME, ADMINISTRATOR.",
-                "MATRIX CODE EXPOSED. REALITY IS A SIMULATION CONFIRMED."
-            ];
-            showOutput(messages[Math.floor(Math.random() * messages.length)], "dimensionText");
-            openDimensionWindow();
-            
-            const codeRain = document.createElement('div');
-            codeRain.style.position = 'fixed';
-            codeRain.style.top = '0';
-            codeRain.style.left = '0';
-            codeRain.style.width = '100%';
-            codeRain.style.height = '100%';
-            codeRain.style.background = 'rgba(0, 255, 0, 0.1)';
-            codeRain.style.zIndex = '999';
-            codeRain.style.pointerEvents = 'none';
-            document.body.appendChild(codeRain);
-            
-            setTimeout(() => {
-                codeRain.remove();
-            }, 3000);
-        }
-
-        // Quantum particles
-        const quantumField = document.getElementById('quantumField');
-        function createQuantumParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'quantum-particle';
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.top = Math.random() * 100 + 'vh';
-            particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            quantumField.appendChild(particle);
-            
-            setTimeout(() => {
-                particle.remove();
-            }, 2000);
-        }
-
-        // Audio visualizer simulation
-        const visualizer = document.getElementById('audioVisualizer');
-        for (let i = 0; i < 50; i++) {
-            const bar = document.createElement('div');
-            bar.className = 'visualizer-bar';
-            bar.style.left = (i * 20) + 'px';
-            bar.style.height = Math.random() * 100 + 50 + 'px';
-            visualizer.appendChild(bar);
-            
-            setInterval(() => {
-                bar.style.height = Math.random() * 100 + 50 + 'px';
-                bar.style.background = `linear-gradient(to top, hsl(${Math.random() * 360}, 100%, 50%), hsl(${Math.random() * 360}, 100%, 50%))`;
-            }, 200);
-        }
-
-        // Reality fissures
-        function createRealityFissure() {
-            const fissure = document.createElement('div');
-            fissure.className = 'reality-fissure';
-            fissure.style.top = Math.random() * 100 + 'vh';
-            fissure.style.animationDuration = (Math.random() * 20 + 10) + 's';
-            document.body.appendChild(fissure);
-            
-            setTimeout(() => {
-                fissure.remove();
-            }, 30000);
-        }
-
-        // Emergency reality exit
-        document.getElementById('realityPortal').addEventListener('click', function() {
-            if (confirm("WARNING: This will attempt to exit the current reality. Success is not guaranteed. Proceed?")) {
-                document.body.innerHTML = '<div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #0f0; font-family: monospace; font-size: 2rem;"><div class="blink">REALITY EXIT IN PROGRESS...</div><div style="margin-top: 20px; font-size: 1rem;">If you\'re still seeing this, the exit failed. Sorry.</div></div>';
-                
-                setTimeout(() => {
-                    location.reload();
-                }, 5000);
-            }
-        });
-
-        // Start reality simulation
-        function startRealitySimulation() {
-            setInterval(drawMatrix, 35);
-            setInterval(createQuantumParticle, 100);
-            setInterval(createRealityFissure, 5000);
-            
-            // Random background changes
-            setInterval(() => {
-                if (Math.random() > 0.7) {
-                    document.body.style.background = `radial-gradient(circle, hsl(${Math.random() * 360}, 100%, 10%), #000)`;
-                    setTimeout(() => {
-                        document.body.style.background = "#000";
-                    }, 1000);
-                }
-            }, 5000);
-            
-            // Random element transformations
-            setInterval(() => {
-                const elements = document.querySelectorAll('.card, h2, button, section');
-                elements.forEach(el => {
-                    if (Math.random() > 0.9) {
-                        const randomRotation = Math.random() * 360;
-                        const randomScale = Math.random() * 0.5 + 0.8;
-                        el.style.transform = `rotate(${randomRotation}deg) scale(${randomScale})`;
-                        
-                        setTimeout(() => {
-                            el.style.transform = '';
-                        }, 2000);
-                    }
-                });
-            }, 3000);
-            
-            // Text corruption effect
-            setInterval(() => {
-                const corruptibleTexts = document.querySelectorAll('.text-corruption, p, h3');
-                corruptibleTexts.forEach(text => {
-                    if(Math.random() > 0.95) {
-                        const originalText = text.textContent;
-                        const scrambledText = originalText.split('').sort(() => 0.5 - Math.random()).join('');
-                        text.textContent = scrambledText;
-                        
-                        setTimeout(() => {
-                            text.textContent = originalText;
-                        }, 800);
-                    }
-                });
-            }, 2000);
-        }
-
-        // Initialize matrix
-        setInterval(drawMatrix, 35);
     </script>
 </body>
 </html>
