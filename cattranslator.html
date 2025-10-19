@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSYCHEDELIC CAT TRANSLATOR</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: 'Press Start 2P', cursive;
+            height: 100vh;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 255, 0, 0.1) 0px,
+                rgba(0, 255, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            animation: matrix 10s infinite linear;
+            z-index: -2;
+        }
+
+        @keyframes matrix {
+            from { transform: translateY(0); }
+            to { transform: translateY(-20px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+            font-size: 24px;
+            margin-bottom: 30px;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .input-container {
+            margin: 30px auto;
+            max-width: 500px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: #000;
+            border: 3px solid #0f0;
+            color: #0f0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            text-align: center;
+            box-shadow: 0 0 15px #0f0;
+        }
+
+        input::placeholder {
+            color: #0a0;
+        }
+
+        button {
+            background: #000;
+            color: #0f0;
+            border: 3px solid #0f0;
+            padding: 15px 30px;
+            margin: 20px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #0f0;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #0f0;
+            color: #000;
+            box-shadow: 0 0 30px #0f0;
+        }
+
+        .result-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .cat-word {
+            position: absolute;
+            font-size: 80px;
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Эффекты */
+        .effect-zoom { animation: zoomInOut 3s ease-in-out; }
+        .effect-spin { animation: spin 2s linear; }
+        .effect-rainbow { animation: rainbow 4s linear; }
+        .effect-shake { animation: shake 2s ease-in-out; }
+        .effect-pulse { animation: pulse 3s ease-in-out; }
+        .effect-glitch { animation: glitchText 2s ease-in-out; }
+        .effect-matrix { animation: matrixRain 3s linear; }
+
+        @keyframes zoomInOut {
+            0% { transform: scale(0.1); opacity: 0; }
+            20% { transform: scale(1.5); opacity: 1; }
+            80% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(0.1); opacity: 0; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(0.1); opacity: 0; }
+            20% { transform: rotate(720deg) scale(1.5); opacity: 1; }
+            80% { transform: rotate(1440deg) scale(1.5); opacity: 1; }
+            100% { transform: rotate(2160deg) scale(0.1); opacity: 0; }
+        }
+
+        @keyframes rainbow {
+            0% { color: #ff0000; transform: scale(0.1); opacity: 0; }
+            16% { color: #ffff00; transform: scale(1.3); opacity: 1; }
+            32% { color: #00ff00; transform: scale(1.5); opacity: 1; }
+            48% { color: #00ffff; transform: scale(1.3); opacity: 1; }
+            64% { color: #0000ff; transform: scale(1.5); opacity: 1; }
+            80% { color: #ff00ff; transform: scale(1.3); opacity: 1; }
+            100% { color: #ff0000; transform: scale(0.1); opacity: 0; }
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0) scale(0.1); opacity: 0; }
+            20% { transform: translateX(0) scale(1.5); opacity: 1; }
+            25% { transform: translateX(-20px) scale(1.5); }
+            35% { transform: translateX(20px) scale(1.5); }
+            45% { transform: translateX(-20px) scale(1.5); }
+            55% { transform: translateX(20px) scale(1.5); }
+            65% { transform: translateX(-20px) scale(1.5); }
+            75% { transform: translateX(20px) scale(1.5); }
+            85% { transform: translateX(0) scale(1.5); }
+            100% { transform: translateX(0) scale(0.1); opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.1); opacity: 0; text-shadow: 0 0 0 #0f0; }
+            20% { transform: scale(1.3); opacity: 1; text-shadow: 0 0 20px #0f0; }
+            50% { transform: scale(1.5); opacity: 1; text-shadow: 0 0 50px #0f0, 0 0 70px #0f0; }
+            80% { transform: scale(1.3); opacity: 1; text-shadow: 0 0 20px #0f0; }
+            100% { transform: scale(0.1); opacity: 0; text-shadow: 0 0 0 #0f0; }
+        }
+
+        @keyframes glitchText {
+            0% { transform: scale(0.1); opacity: 0; }
+            20% { 
+                transform: scale(1.5); 
+                opacity: 1;
+                text-shadow: 2px 0 red, -2px 0 blue;
+            }
+            30% { text-shadow: -2px 0 red, 2px 0 blue; }
+            40% { text-shadow: 2px 0 red, -2px 0 blue; }
+            50% { text-shadow: -2px 0 red, 2px 0 blue; }
+            60% { text-shadow: 2px 0 red, -2px 0 blue; }
+            80% { 
+                transform: scale(1.5); 
+                opacity: 1;
+                text-shadow: none;
+            }
+            100% { transform: scale(0.1); opacity: 0; }
+        }
+
+        @keyframes matrixRain {
+            0% { 
+                transform: translateY(-100px) scale(0.1); 
+                opacity: 0;
+                text-shadow: 0 0 10px #0f0;
+            }
+            20% { 
+                transform: translateY(0) scale(1.5); 
+                opacity: 1;
+                text-shadow: 0 0 20px #0f0;
+            }
+            80% { 
+                transform: translateY(0) scale(1.5); 
+                opacity: 1;
+                text-shadow: 0 0 20px #0f0;
+            }
+            100% { 
+                transform: translateY(100px) scale(0.1); 
+                opacity: 0;
+                text-shadow: 0 0 10px #0f0;
+            }
+        }
+
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #0f0;
+            box-shadow: 0 0 10px #0f0;
+            animation: scan 3s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            50% { top: 100%; }
+            100% { top: 0; }
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            opacity: 0.05;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .noise::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: noise 0.2s infinite;
+        }
+
+        @keyframes noise {
+            0% { transform: translate(0,0); }
+            10% { transform: translate(-5%,-5%); }
+            20% { transform: translate(-10%,5%); }
+            30% { transform: translate(5%,-10%); }
+            40% { transform: translate(-5%,15%); }
+            50% { transform: translate(-10%,5%); }
+            60% { transform: translate(15%,0); }
+            70% { transform: translate(0,10%); }
+            80% { transform: translate(-15%,0); }
+            90% { transform: translate(10%,5%); }
+            100% { transform: translate(5%,0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    <div class="scan-line"></div>
+    <div class="noise"></div>
+
+    <div class="container">
+        <h1>🐱 PSYCHEDELIC CAT TRANSLATOR 🐱</h1>
+        
+        <div class="input-container">
+            <input type="text" id="textInput" placeholder="ENTER TEXT TO TRANSLATE...">
+        </div>
+        
+        <button onclick="startTranslation()">LET'S GO!!!1!</button>
+    </div>
+
+    <div class="result-overlay" id="resultOverlay"></div>
+
+    <audio id="soundEffect" preload="auto">
+        <source src="https://zvukipro.com/uploads/files/2023-02/1677009109_3e3fc081726eb67.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        const effects = [
+            'effect-zoom', 'effect-spin', 'effect-rainbow', 
+            'effect-shake', 'effect-pulse', 'effect-glitch', 'effect-matrix'
+        ];
+
+        function translateToCat(text) {
+            return text
+                .toLowerCase()
+                .split('')
+                .map(char => {
+                    if ('аеёиоуыэюя'.includes(char)) return 'me';
+                    if (char === ' ') return ' ';
+                    if ('!?.,'.includes(char)) return char;
+                    return 'm';
+                })
+                .join('')
+                .replace(/mememe/g, 'meomeow')
+                .replace(/мямя/g, 'мяу')
+                .replace(/m{3,}/g, 'mmmm')
+                .toUpperCase();
+        }
+
+        function startTranslation() {
+            const input = document.getElementById('textInput').value.trim();
+            if (!input) return;
+
+            const translated = translateToCat(input);
+            showEffects(translated);
+        }
+
+        function showEffects(text) {
+            const overlay = document.getElementById('resultOverlay');
+            const audio = document.getElementById('soundEffect');
+            
+            overlay.style.display = 'flex';
+            overlay.innerHTML = '';
+            
+            // Проигрываем звук
+            audio.currentTime = 0;
+            audio.play();
+
+            let effectIndex = 0;
+
+            function showNextEffect() {
+                if (effectIndex >= effects.length) {
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 1000);
+                    return;
+                }
+
+                const word = document.createElement('div');
+                word.className = `cat-word ${effects[effectIndex]}`;
+                word.textContent = text;
+                word.style.color = getRandomColor();
+                
+                overlay.appendChild(word);
+
+                setTimeout(() => {
+                    word.remove();
+                    effectIndex++;
+                    showNextEffect();
+                }, 3000);
+            }
+
+            showNextEffect();
+        }
+
+        function getRandomColor() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Обработка Enter
+        document.getElementById('textInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                startTranslation();
+            }
+        });
+    </script>
+</body>
+</html>
